@@ -32,33 +32,37 @@ namespace AOPT {
             std::cout<<"Grid searching the minimum of a 2-D function..."<<std::endl;
             double f = 0., fmin = std::numeric_limits<double>::max();
             
-            // Define the step size in each dimension (x and y)
-	    double step_x = (_x_u[0] - _x_l[0]) / n_cells_;
-	    double step_y = (_x_u[1] - _x_l[1]) / n_cells_;
+            const double x_start = _x_l(0);
+            const double y_start = _x_l(1);
+
+            const double x_end = _x_u(0);
+            const double y_end = _x_u(1);
+
+            const int x_n_cells = this->n_cells_;
+            const int y_n_cells = this->n_cells_;
+
             
             Vec x_min(2);
+            x_min << std::numeric_limits<double>::min(), std::numeric_limits<double>::min();
+
+            const double x_step = (x_end - x_start) / x_n_cells;
+            const double y_step = (y_end - y_start) / y_n_cells;
             
-            //------------------------------------------------------//
-            //Todo: implement the 2d version of the grid search
-            // algorithm to find minimum value of _func between _x_l and _x_u
-            //------------------------------------------------------//
-                        // Implement the 2D version of the grid search algorithm
-            for (int i = 0; i <= n_cells_; ++i) {
-                for (int j = 0; j <= n_cells_; ++j) {
-                    Vec x(2);
-                    x[0] = _x_l[0] + i * step_x; // x-coordinate
-                    x[1] = _x_l[1] + j * step_y; // y-coordinate
-                    f = _func->eval_f(x);
-                    if (f < fmin) {
-                        fmin = f;
-                        x_min = x; // Update the minimum point
+            for (double i = x_start; i <= x_end; i += x_step) {
+                for(double j = y_start; j <= y_end; j += y_step) {
+                    Vec point(2);
+                    point << i, j;
+                    const double f_x_y = _func->eval_f(point);
+                    if(f_x_y <= fmin) {
+                        fmin = f_x_y;
+                        x_min = point;
                     }
                 }
             }
             
-            //------------------------------------------------------//
             _f_min = fmin;
-            std::cout<<"Minimum value of the function is: "<<fmin<<" at x:\n"<<x_min<<std::endl;
+            Eigen::IOFormat fmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "(", ")");
+            std::cout<<"Minimum value of the function is: "<<fmin<<" at x:"<<x_min.format(fmt)<<std::endl;
             return 0;
         }
 
@@ -83,65 +87,37 @@ namespace AOPT {
 
             double f_min = std::numeric_limits<double>::max();
             Vec x_min(n);
-            //------------------------------------------------------//
-            //Todo: implement the nd version of the grid search
-            // algorithm to find minimum value of a nd quadratic function
-            // set f_min with the minimum, which is then stored in the referenced argument _f_min
-            std::vector<int> indices(n, 0);
-            std::vector<double> steps(n);
-            for (int i = 0; i < n; ++i) {
-                steps[i] = (_x_u[i] - _x_l[i]) / n_cells_; // Calculate step size for each dimension
-            }
-            // Create a loop to generate all combinations of grid points
-            while (true) {
-                // Calculate the current grid point
-                Vec x(n);
-                for (int i = 0; i < n; ++i) {
-                    x[i] = _x_l[i] + indices[i] * steps[i];
-                }
 
-                // Evaluate the function at this point
-                double f = _func->eval_f(x);
-
-                // Check if we found a new minimum
-                if (f < f_min) {
-                    f_min = f;
-                    x_min = x; // Update the minimum point
-                }
-
-                // Update indices to generate the next grid point
-                int dim = n - 1;
-                while (dim >= 0) {
-                    if (++indices[dim] > n_cells_) { // Check if we exceeded the limit
-                        indices[dim] = 0; // Reset current dimension
-                        dim--; // Move to the next dimension
-                    } else {
-                        break; // Valid index found, exit the loop
-                    }
-                }
-
-                if (dim < 0) { // All indices have been reset
-                    break; // Exit the loop
-                }
-            }
-            
-            //------------------------------------------------------//
+            Vec current = Eigen::VectorXd::Zero(_x_l.size());
+            this->iterate_over_dimension_(_func, _x_l, _x_u, current, 0, f_min, x_min);
             _f_min = f_min;
-            std::cout << "Minimum value of the function is: " << f_min << " at x:\n" << x_min << std::endl;
+            Eigen::IOFormat fmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "(", ")");
+            std::cout << "Minimum value of the function is: " << f_min << " at x:" << x_min.format(fmt) << std::endl;
 
             return 0;
         }
 
-
-
     private:
         int n_cells_;
+
+        void iterate_over_dimension_(FunctionBase* _func, const Vec& _x_l, const Vec& _x_u, Vec& _current, int dim, double &_f_min, Vec &_x_min) const {
+            if(dim == _current.size()) {
+                const double f_x = _func->eval_f(_current);
+                if(f_x <= _f_min) {
+                    _f_min = f_x;
+                    _x_min << _current;
+                }
+                return;
+            }
+            
+            double step = (_x_u(dim) - _x_l(dim)) / (this->n_cells_);
+
+            for(int i = 0; i <= this->n_cells_; ++i) {
+                _current(dim) = _x_l(dim) + i * step;
+                iterate_over_dimension_(_func, _x_l, _x_u, _current, dim + 1, _f_min, _x_min);
+            }
+        }
     };
 
     //=============================================================================
 }
-
-
-
-
-
