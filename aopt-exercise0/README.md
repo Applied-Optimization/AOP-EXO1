@@ -5,9 +5,15 @@
 
 # Assignment 1
 
+- **Gobi**: Implemented the 2D quadratic function in `FunctionQuadratic2D.hh`, including the evaluation function and the generation of output CSV files for visualization.
+  
+- **Gobi && Deep Shukla**: Implemented the ND quadratic function in `FunctionQuadraticND.hh`, allowing for evaluation in higher dimensions.
+
+- **Werner Schmid**: Developed the grid search algorithm for both 2D and ND functions, enabling efficient minimization of the objective functions.
+
 ## Introduction
 
-This file contains instructions on how I proceeded to resolve the exercices of the assignments.
+This file contains instructions on how We proceeded to resolve the exercices of the assignments.
 
 ## Implementing objective functions
 This project implements several objective functions required for optimization problems. 
@@ -27,9 +33,9 @@ After successfully compiling, I used the `CsvExporter` tool to generate the outp
 
 The 2D quadratic function is defined as:
 
-\[
+$$[
 f(x) = \frac{1}{2} (x_1^2 + \gamma x_2^2)
-\]
+]$$
 
 - I implemented this function in the file `FunctionQuadratic2D.hh` within the project. 
 - By default, the value of $\gamma$ is set to -1 in the code.
@@ -84,9 +90,6 @@ f(x) = \frac{1}{2} x^T A x + b^T x + c
 
 The non-convex function is defined as:
 
-\[
-h(x, y) = (y - x^2)^2 + \cos^2(4y) \cdot (1 - x)^2 + x^2 + y^2
-\]
 
 $$
 h(x, y) = (y - x^2)^2 + \cos^2(4y) \cdot (1 - x)^2 + x^2 + y^2
@@ -157,3 +160,5 @@ $ ./Build/bin/GridSearch 2 -100 100 200 4
 ```
 
 Took me 135.313 seconds to complete and find the optimal solution of -77146.5.
+
+
