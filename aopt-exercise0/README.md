@@ -1,3 +1,8 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 # Assignment 1
 
 ## Introduction
@@ -83,6 +88,11 @@ The non-convex function is defined as:
 h(x, y) = (y - x^2)^2 + \cos^2(4y) \cdot (1 - x)^2 + x^2 + y^2
 \]
 
+$$
+h(x, y) = (y - x^2)^2 + \cos^2(4y) \cdot (1 - x)^2 + x^2 + y^2
+$$
+
+
 - I implemented this function in the file `FunctionNonConvex2D.hh`.
 - This function is more complex and exhibits non-convex behavior, meaning it has multiple local minima.
 
@@ -111,8 +121,8 @@ h(x, y) = (y - x^2)^2 + \cos^2(4y) \cdot (1 - x)^2 + x^2 + y^2
    - I successfully generated a CSV file (`func0.csv`) containing the evaluation of the non-convex function over the grid [-2, 2] for both $x$ and $y$.
 
 
-![My Image](./newplot__2.png "Contour")
-![My Image](./newplot__1.png "3D surface")
+![My Image](./non_c_contour.png "Contour")
+![My Image](./3D_non_con.png "3D surface")
 
 ## Grid Search
 
