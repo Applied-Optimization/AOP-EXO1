@@ -9,7 +9,7 @@
   
 - **Gobi Ahonon && Deep Shukla**: Implemented the ND quadratic function in `FunctionQuadraticND.hh`, allowing for evaluation in higher dimensions.
 
-- **Werner Schmid**: Developed the grid search algorithm for both 2D and ND functions, enabling efficient minimization of the objective functions.
+- **Werner Schmid**: Developed the grid search algorithm for both 2D and ND functions, enabling efficient minimization of the objective functions .
 
 ## Introduction
 
