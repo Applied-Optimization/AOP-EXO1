@@ -5,9 +5,9 @@
 
 # Assignment 1
 
-- **Gobi**: Implemented the 2D quadratic function in `FunctionQuadratic2D.hh`, including the evaluation function and the generation of output CSV files for visualization.
+- **Gobi Ahonon**: Implemented the 2D quadratic function in `FunctionQuadratic2D.hh`, including the evaluation function and the generation of output CSV files for visualization.
   
-- **Gobi && Deep Shukla**: Implemented the ND quadratic function in `FunctionQuadraticND.hh`, allowing for evaluation in higher dimensions.
+- **Gobi Ahonon && Deep Shukla**: Implemented the ND quadratic function in `FunctionQuadraticND.hh`, allowing for evaluation in higher dimensions.
 
 - **Werner Schmid**: Developed the grid search algorithm for both 2D and ND functions, enabling efficient minimization of the objective functions.
 
