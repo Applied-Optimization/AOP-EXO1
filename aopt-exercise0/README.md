@@ -62,9 +62,9 @@ f(x) = \frac{1}{2} (x_1^2 + \gamma x_2^2)
 
 The ND quadratic function is defined as:
 
-\[
+$[
 f(x) = \frac{1}{2} x^T A x + b^T x + c
-\]
+]$
 
 - I implemented this function in the file `FunctionQuadraticND.hh`.
 - In this function, $A$ is an $n \times n$ matrix, and $b$, $x$, and $c$ are vectors.
